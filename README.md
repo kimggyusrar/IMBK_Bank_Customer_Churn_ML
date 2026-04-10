@@ -3,14 +3,20 @@
 ---
 ## 기간 : 2026년 4월 10일 
 
-## 기술스택 
-분류,기술 스택
-Language,Python
-Environment,"Jupyter Notebook, Colab"
-Data Analysis,"Pandas, Numpy, Matplotlib, Seaborn"
-AutoML & Library,"PyCaret (Benchmarking), Optuna (Hyperparameter Tuning)"
-ML Models,"Gradient Boosting, AdaBoost, Decision Tree, QDA, Stacking Classifier"
-Explainable AI,SHAP (TreeExplainer)
+## 🛠 Tech Stack
+
+### 💻 Language & Environment
+* **Language:** Python
+* **Environment:** Jupyter Notebook, Google Colab
+
+### 📊 Data Science & ML
+* **Data Analysis:** Pandas, Numpy, Matplotlib, Seaborn
+* **AutoML & Library:** PyCaret, Optuna
+* **Machine Learning Models:**
+  * Gradient Boosting, AdaBoost, Decision Tree, QDA
+  * **Ensemble:** Stacking Classifier (Meta-model: Logistic Regression)
+* **XAI (Explainable AI):** SHAP (TreeExplainer)
+
 ### a
 
 -a

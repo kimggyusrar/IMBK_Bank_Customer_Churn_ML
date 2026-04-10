@@ -6,26 +6,26 @@
 ## Tech Stack
 
 ### Language & Environment
-* **Language:** Python
-* **Environment:** Jupyter Notebook, Google Colab
+* Language: Python
+* Environment: Jupyter Notebook, Google Colab
 
 ### Data Science & ML
-* **Data Analysis:** Pandas, Numpy, Matplotlib, Seaborn
-* **AutoML & Library:** PyCaret, Optuna
-* **Machine Learning Models:**
+* Data Analysis: Pandas, Numpy, Matplotlib, Seaborn
+* AutoML & Library: PyCaret, Optuna
+* Machine Learning Models:
   * Gradient Boosting, AdaBoost, Decision Tree, QDA
-  * **Ensemble:** Stacking Classifier (Meta-model: Logistic Regression)
-* **XAI (Explainable AI):** SHAP (TreeExplainer)
+  * Ensemble: Stacking Classifier (Meta-model: Logistic Regression)
+* XAI (Explainable AI): SHAP (TreeExplainer)
 
 ## Data source
-* ** kaggle Bank Customer Churn Dataset :** row: 10000, col:12
+* kaggle Bank Customer Churn Dataset : row: 10000, col:12
 
 ## Data preprocessing
 데이터의 품질을 높이고 모델의 왜곡을 방지하기 위해 단계별 전처리를 수행했습니다.
-**Feature Cleaning**: 고유값인 `customer_id`를 제거하여 모델의 과적합(Overfitting) 방지.
-2. **Encoding**: 범주형 변수인 `country`, `gender`에 `LabelEncoder`를 적용하여 수치화.
-3. **Data Splitting**: `stratify=y` 설정을 통해 이탈/비이탈 클래스 비율을 유지하며 Train/Valid 세트 분할 (8:2).
-4. **Scaling**: `StandardScaler`를 적용하여 피처 간 단위 차이를 조정, 특히 메타 모델(Logistic Regression)의 수렴 속도 개선.
+Feature Cleaning: 고유값인 `customer_id`를 제거하여 모델의 과적합(Overfitting) 방지.
+2. Encoding: 범주형 변수인 `country`, `gender`에 `LabelEncoder`를 적용하여 수치화.
+3. Data Splitting: `stratify=y` 설정을 통해 이탈/비이탈 클래스 비율을 유지하며 Train/Valid 세트 분할 (8:2).
+4. Scaling: `StandardScaler`를 적용하여 피처 간 단위 차이를 조정, 특히 메타 모델(Logistic Regression)의 수렴 속도 개선.
 
 ## Exploratory Data Analysis (EDA) & Interpretation
 데이터의 특성을 파악하고 이탈(Churn)에 영향을 미치는 주요 변수를 식별하기 위해 심층 분석을 수행했습니다.
@@ -33,32 +33,33 @@
 ### 1. 타겟 변수 분포 (Target Distribution)
 <img width="865" height="630" alt="image" src="https://github.com/user-attachments/assets/69aaa9d0-847a-4c69-becd-227a5caf3324" />
 
-* **현황**: 비이탈 고객(0)이 이탈 고객(1)보다 압도적으로 많은 **데이터 불균형(Imbalanced Data)** 상태임을 확인했습니다.
-* **조치**: 모델 학습 시 `stratify` 옵션을 적용하고, 성능 지표로 Accuracy 대신 **F1-Score**를 우선순위로 두어 예측 신뢰도를 높였습니다.
+* 현황: 비이탈 고객(0)이 이탈 고객(1)보다 압도적으로 많은 **데이터 불균형(Imbalanced Data)** 상태임을 확인했습니다.
+* 전처리: 모델 학습 시 `stratify` 옵션을 적용하고, 성능 지표로 Accuracy 대신 **F1-Score**를 우선순위로 두어 예측 신뢰도를 높였습니다.
 
 ### 2. 변수 간 상관관계 (Correlation Analysis)
 <img width="818" height="717" alt="image" src="https://github.com/user-attachments/assets/d273f13a-396b-45e5-840e-6e8c908952e3" />
 
-* **Heatmap 분석**: `churn`과 가장 높은 양의 상관관계를 보이는 변수는 **나이(Age)**로 나타났습니다.
-* **해석**: 연령대가 높을수록 이탈 위험이 커지는 경향이 있으며, 이는 은퇴 후 자산 이동이나 상품 만족도 변화와 관련이 있을 것으로 추정됩니다.
+* Heatmap 분석: `churn`과 가장 높은 양의 상관관계를 보이는 변수는 **나이(Age)**로 나타났습니다.
+* 해석: 연령대가 높을수록 이탈 위험이 커지는 경향이 있으며, 이는 은퇴 후 자산 이동이나 상품 만족도 변화와 관련이 있을 것으로 추정됩니다.
+
 ### 3. 주요 변수별 상세 분석
 
 #### Age (연령)
 <img width="817" height="565" alt="image" src="https://github.com/user-attachments/assets/48206d01-3882-4cc4-9e63-2efbd1dc3c01" />
 
-* **KDE Plot 분석**: 40대 중후반부터 이탈 고객의 밀도가 급격히 높아지는 양상을 보입니다.
-* **인사이트**: 고연령층 고객을 유지하기 위한 전용 멤버십이나 건강 관리 연계 금융 상품 등의 리텐션 전략이 필요합니다.
+* KDE Plot 분석: 40대 중후반부터 이탈 고객의 밀도가 급격히 높아지는 양상을 보입니다.
+* 인사이트: 고연령층 고객을 유지하기 위한 전용 멤버십이나 건강 관리 연계 금융 상품 등의 리텐션 전략이 필요합니다.
 
 #### Balance (잔액)
-* **분석 결과**: 잔액이 높을수록 이탈률이 오히려 높게 나타나는 역설적인 현상이 발견되었습니다.
-* **인사이트**: 고액 자산가는 금리에 민감하여 상품 만기 시 타 은행으로 자금을 이동할 가능성이 큽니다. 만기 전 재예치 혜택 제공 등 선제적 대응이 요구됩니다.
+* 분석 결과: 잔액이 높을수록 이탈률이 오히려 높게 나타나는 역설적인 현상이 발견되었습니다.
+* 인사이트: 고액 자산가는 금리에 민감하여 상품 만기 시 타 은행으로 자금을 이동할 가능성이 큽니다. 만기 전 재예치 혜택 제공 등 선제적 대응이 요구됩니다.
 
 #### Geography (국가별 특성)
-* **분석 결과**: 인코딩 데이터 분석 결과, **독일(Germany)** 고객의 이탈률이 다른 국가(프랑스, 스페인)에 비해 현저히 높습니다.
-* **인사이트**: 이는 당시 독일의 경제 상황이나 지역 내 경쟁 은행의 공격적인 마케팅 등의 외부 요인이 작용했을 가능성이 큼을 시사합니다.
+* 분석 결과: 인코딩 데이터 분석 결과, **독일(Germany)** 고객의 이탈률이 다른 국가(프랑스, 스페인)에 비해 현저히 높습니다.
+* 인사이트: 이는 당시 독일의 경제 상황이나 지역 내 경쟁 은행의 공격적인 마케팅 등의 외부 요인이 작용했을 가능성이 큼을 시사합니다.
 
 #### Number of Products & IsActiveMember
-* **분석 결과**: 보유 상품 수가 많고 활동적인 회원(Active Member)일수록 이탈률이 낮습니다.
+* 분석 결과: 보유 상품 수가 많고 활동적인 회원(Active Member)일수록 이탈률이 낮습니다.
 * **인사이트**: 고객이 은행의 다양한 서비스를 동시에 이용하도록 유도(Cross-selling)하는 것이 이탈 방지에 핵심적인 역할을 합니다.
 
 ## AutoML – Hyperparameter Tuning – Stacking Pipe – Shap value
